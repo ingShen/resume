@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>accordion</title>
+    <style>
+        ul{list-style: none}
+        *{margin:0; padding:0;}
+        body {
+            background-color: #222;
+        }
+        div{
+            width: 1180px;
+            height: 405px;
+            margin:100px auto;
+            border:1px solid #000;
+            overflow: hidden;
+        }
+        div li {
+            width: 160px;
+            height: 405px;
+            float: left;
+            position: relative;
+        }
+        .current {
+            width: 538px;
+        }
+        div ul {
+            width: 1500px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <ul>
+        <li class="current">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>
+</body>
+</html>
+<script src="animate.js"></script>
+<script>
+    var box = document.getElementsByTagName("div")[0];
+    var lis = box.children[0].children;
+    for(var i=0;i<lis.length;i++)
+    {
+        lis[i].style.backgroundImage = "url(images/"+(i+10)+".jpg)";
+        lis[i].onmouseover = function() {
+            for(var i=0;i<lis.length;i++)
+            {
+                animate(lis[i],{width:160});
+            }
+            animate(lis[lis.length-1],{width:300});
+            animate(this,{width:538});
+        }
+        lis[i].onmouseout = function(){
+            for(var i=0;i<lis.length;i++)
+            {
+                animate(lis[i],{width:160});
+            }
+            animate(lis[lis.length-1],{width:300});
+            animate(this,{width:538});
+         }
+    }
+</script>

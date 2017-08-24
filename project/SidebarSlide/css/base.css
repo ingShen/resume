@@ -1,0 +1,73 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+ul,ol {
+    list-style-type: none;
+}
+body {
+    font: 12px/180% Arial, Helvetica, sans-serif, "新宋体";
+    background: #DCDCDC;
+}
+
+a, img {
+    border: 0;
+    text-decoration: none;
+}
+
+* html, * html body /* 修正IE6振动bug */
+{
+    background-image: url(about:blank);
+    background-attachment: fixed;
+}
+/* nav */
+#nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    width: 140px;
+    cursor: pointer;
+    margin: 100px 0 0 0;
+}
+
+* html #nav {
+    position: absolute;
+    top: expression(eval(document.documentElement.scrollTop));
+}
+
+#nav a {
+    display: block;
+    position: relative;
+    height: 30px;
+    line-height: 30px;
+    margin-bottom: 2px;
+    background: #fff;
+    padding-left: 30px;
+    width: 110px;
+    overflow: hidden;
+    color: #333;
+    cursor: pointer;
+    left: -110px;
+}
+
+#nav a:hover {
+    text-decoration: none;
+    color: #1974A1;
+}
+
+#nav a:hover span {
+    background: #5FA429
+}
+
+#nav a span {
+    display: block;
+    float: right;
+    width: 30px;
+    background: #636871;
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+    margin-left: 10px;
+    font-style: normal;
+}

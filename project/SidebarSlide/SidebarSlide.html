@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>侧栏滑动效果</title>
+    <link href="css/base.css" type="text/css" rel="stylesheet"/>
+    <script src="js/animate.js"></script>
+    <script>
+        window.onload = function () {
+
+            function $(id) {
+                return document.getElementById(id);
+            }
+
+            $("nav").onmouseover = function () {
+                move(0);
+            }
+            $("nav").onmouseout = function () {
+                nav
+                move(-110);
+            }
+            var timer = null;
+
+            function move(move) {
+                clearTimeout(timer);
+                timer = setTimeout(function () {
+                    var len = $("navOl").children.length;
+                    for (var i = 0; i < len; i++) {
+                        (function (e) {  //自执行函数实时把i传入e
+                            setTimeout(function () {
+                                animate($("navOl").children[e].children[0], {"left": move})
+                            }, 100 * i);
+                        })(i);
+                    }
+                }, 200);
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="nav">
+    <ol id="navOl">
+        <li><a href='#'>HTML<span>0</span></a></li>
+        <li><a href='#'>CSS<span>1</span></a></li>
+        <li><a href='#'>JavaScript<span>2</span></a></li>
+        <li><a href='#'>jQuery<span>3</span></a></li>
+        <li><a href='#'>Bootstrop<span>4</span></a></li>
+        <li><a href='#'>zepto<span>5</span></a></li>
+        <li><a href='#'>angularjs<span>6</span></a></li>
+        <li><a href='#'>react<span>7</span></a></li>
+        <li><a href='#'>vue<span>8</span></a></li>
+        <li><a href='#'>nodejs<span>9</span></a></li>
+    </ol>
+</div>
+<div style="height:1000px;"></div>
+</body>
+</html>

@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>i-demo</title>
+    <link rel="stylesheet" type="text/css" href="css/jquery.pagepiling.css"/>
+    <link rel="stylesheet" type="text/css" href="css/examples.css"/>
+    <link rel="stylesheet" href="css/loading.css">
+    <style>
+        /*!*开屏动画*!*/
+        .loading-cover {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            background: #1B1B1B; /*loading背景色*/
+            z-index: 10000;
+        }
+
+        .loading-cover .circle {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -70px 0 0 -70px;
+            z-index: 90;
+            animation: loadingCover 1s linear 1 forwards;
+            background: #000; /*加载动画背景色*/
+        }
+
+        .beta-app-host {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            font-weight: bold;
+            font-size: 24px;
+            font-family: 'Roboto Slab', 'Helvetica Neue', Helvetica, 'Hiragino Sans GB', Arial, sans-serif;
+            text-align: left;
+        }
+
+        #canvas {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        /*公共部分*/
+        /*把整屏划分为两部分*/
+        .s-l {
+            width: 50%;
+            height: 100%;
+            float: left;
+        }
+
+        #section2 {
+            background-color: #DBC4A5 !important;
+        }
+
+        #section2 .s2-l {
+            background-color: #DDC7A9 !important;
+        }
+
+        /*中间正方形*/
+        .damao {
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -200px;
+            margin-top: -200px;
+        }
+
+        /*呼吸圆*/
+        .box {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -60px;
+            margin-top: -60px;
+        }
+
+        /*------The End-------*/
+        .damao2 {
+            /*大圆内整个填充色*/
+            background-color: #915C30;
+        }
+
+        .des {
+            position: absolute;
+            top: 45%;
+            left: 0;
+            color: white;
+            text-align: left;
+            width: 500px;
+        }
+
+        .des p.title {
+            /*width: 100px;*/
+            opacity: 1 !important;
+            text-indent: 1em;
+            font-size: 32px;
+            color: white;
+        }
+
+        .des .content {
+            /*width: 40%;*/
+            text-indent: 1em;
+        }
+
+        /*正方形内左半圆*/
+        .damao2 .d-l {
+            width: 200px;
+            height: 400px;
+            border-left-width: 200px;
+            border-left-color: #734926;
+            border-left-style: solid;
+            border-radius: 50%;
+        }
+
+        .box2 {
+            background: url(images/bs.png) no-repeat;
+            background-size: 120px 120px;
+            animation: mymove 2s infinite;
+        }
+
+        .box:hover {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -60px;
+            margin-top: -60px;
+
+        }
+
+        .box2:hover {
+            animation: myout 1s linear;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes mymove {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.25);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes myout {
+            0% {
+                transform: scale(1);
+            }
+            /*25%  {transform: scale(1.2);}*/
+            50% {
+                transform: scale(1.5);
+            }
+            /*75%  {transform: scale(1.6);}*/
+            75% {
+                transform: scale(2.0);
+            }
+            100% {
+                transform: scale(3.4);
+            }
+        }
+
+        #section3 {
+            background-color: #21608B !important;
+        }
+
+        #section3 .s3-l {
+            background-color: #2B6890 !important;
+        }
+
+        /*因为三角形是由另外两个长方形组成，所以此属性园内填充颜色不会显示*/
+        /*.damao3 {*/
+        /*background-color: #111;*/
+        /*}*/
+
+        .damao3 .l200 {
+            float: left;
+            width: 0px;
+            height: 0px;
+            background-color: #2B6890;
+            border-bottom: 400px solid #C06580;
+            border-left: 200px solid transparent;
+        }
+
+        .damao3 .r200 {
+            float: left;
+            width: 0px;
+            height: 0px;
+            background-color: #21608B;
+            border-bottom: 400px solid #F27FA1;
+            border-right: 200px solid transparent;
+
+        }
+
+        .box3 {
+            background: url(images/colorfulSnack.png) no-repeat center center;
+            background-size: 130px 150px;
+            margin-left: -60px;
+            margin-top: 15px;
+            animation: mymove 2s infinite;
+        }
+
+        .box3:hover {
+            margin-left: -60px;
+            margin-top: 15px;
+            animation: myout3 1s linear;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes myout3 {
+            0% {
+                transform: scale(1);
+            }
+            /*25%  {transform: scale(1.2);}*/
+            50% {
+                transform: scale(1.25);
+            }
+            /*75%  {transform: scale(1.6);}*/
+            75% {
+                transform: scale(1.45);
+            }
+            100% {
+                transform: scale(2.08333);
+            }
+        }
+
+        #section4 {
+            background-color: #A7DBCC !important;
+        }
+
+        #section4 .s4-l {
+            background-color: #ABDDCE !important;
+        }
+
+        .damao4 {
+            background-color: #62A490;
+            /*border-radius: 50%;*/
+            border-radius: 0;
+            top: 50%;
+            left: 50%;
+            overflow: hidden;
+
+        }
+
+        .damao4 .d-l {
+            width: 200px;
+            height: 400px;
+            border-left-width: 200px;
+            border-left-color: #4E8272;
+            border-left-style: solid;
+            /*border-radius: 50%;*/
+        }
+
+        .box4 {
+            background: url(images/animal.png) no-repeat;
+            background-size: 120px 120px;
+            animation: mymove 2s infinite;
+        }
+
+        .box4:hover {
+            width: 120px;
+            height: 120px;
+            /*background-color: transparent;*/
+            /*border: 1px solid red;*/
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -60px;
+            margin-top: -60px;
+            animation: myout4 1s linear;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes myout4 {
+            0% {
+                transform: scale(1);
+            }
+            /*25%  {transform: scale(1.2);}*/
+            50% {
+                transform: scale(2.2);
+            }
+            /*75%  {transform: scale(1.6);}*/
+            75% {
+                transform: scale(3.5);
+            }
+            100% {
+                transform: scale(4.8);
+            }
+        }
+
+        #section5 {
+            background-color: #2D0B54 !important;
+        }
+
+        #section5 .s5-l {
+            background-color: #37165C !important;
+        }
+
+        .lanren2 {
+            width: 223.6px;
+            height: 400px;
+            margin: auto;
+            background-color: #FF6F64;
+            position: relative;
+        }
+
+        .lanren2 .cover {
+            width: 50%;
+            height: 100%;
+            background-color: #CB584F;
+        }
+
+        .lanren2 .left {
+            width: 0;
+            height: 0;
+            position: absolute;
+            left: -100px;
+            top: 0;
+            border-right: 100px solid #CB584F;
+            border-top: 200px solid transparent;
+            border-bottom: 200px solid transparent;
+        }
+
+        .lanren2 .right {
+            width: 0;
+            height: 0;
+            position: absolute;
+            right: -100px;
+            top: 0;
+            border-left: 100px solid #FF6F64;
+            border-top: 200px solid transparent;
+            border-bottom: 200px solid transparent;
+        }
+
+        .box5 {
+            background: url(images/accordion.png) no-repeat center center;
+            background-size: 240px 150px;
+            animation: mymove 2s infinite;
+        }
+
+        .box5:hover {
+            width: 120px;
+            height: 120px;
+
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -60px;
+            margin-top: -60px;
+            animation: myout5 1s linear;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes myout5 {
+            0% {
+                transform: scale(1);
+            }
+            /*25%  {transform: scale(1.2);}*/
+            50% {
+                transform: scale(2.5);
+            }
+            /*75%  {transform: scale(1.6);}*/
+            75% {
+                transform: scale(3);
+            }
+            100% {
+                transform: scale(3.2)
+            }
+        }
+        #section6 .intro p{
+            width: 50%;
+            margin: 0 auto;
+            font-size: 1.5em;
+            opacity: 0.6;
+        }
+        .aboutme {
+            position: fixed;
+            right: 0;
+            top: 0;
+            z-index: 99;
+            color: #fff;
+            /*background-color: #f00;*/
+        }
+        .aboutme .logo {
+            width: 80px;
+            height: 80px;
+            background: url(images/logo.png) no-repeat;
+            background-size: 80px 80px;
+            text-align: center;
+            line-height: 180px;
+            position: relative;
+            right: -70px;
+            top: 0;
+        }
+
+    </style>
+    <script src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/jqueryui/1.8.22/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/jquery.pagepiling.min.js"></script>
+    <script src="js/chouchu.js"></script>
+    <script src="js/tree.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            myFirs();//初始化
+            setInterval(function(){
+                $(".logo").fadeToggle(3000);
+            },3000);
+        })
+        var deleteLog = false;
+        $(document).ready(function () {
+            $('#pagepiling').pagepiling({
+                menu: '#menu',
+                anchors: ['page1', 'page2', 'page3', 'page4', 'page5', 'page6'],
+                sectionsColor: ['#000000', '#2ebe21', '#2C3E50', '#51bec4', '#952374', '#234'],
+//                onLeave: function (index, nextIndex, direction) {
+//                    if (deleteLog) {
+//                        $('#callbacksDiv').html('');
+//                    }
+//                    $('#callbacksDiv').append('<p>onLeave - index:' + index + ' nextIndex:' + nextIndex + ' direction:' + direction + '</p>');
+//                },
+//                afterRender: function () {
+//                    $('#callbacksDiv').append('<p>afterRender</p>');
+//                },
+//                afterLoad: function (anchorLink, index) {
+//                    $('#callbacksDiv').append('<p>afterLoad - anchorLink:' + anchorLink + " index:" + index + '</p>');
+//
+//                    //section 2
+//                    if (index == 2) {
+//                        //moving the image
+//                        $('#section2').find('.intro').delay(100).animate({
+//                            left: '0%'
+//                        }, 1500, 'easeOutExpo', function () {
+//                            $('#section2').find('p').first().fadeIn(700, function () {
+//                                $('#section2').find('p').last().fadeIn(600);
+//                            });
+//                        });
+//
+//
+//                    }
+//
+//                    //section 3
+//                    if (anchorLink == 'page3') {
+//                        //section 3
+//                        $('#section3').find('.intro').delay(100).animate({
+//                            left: '0%'
+//                        }, 1500, 'easeOutExpo');
+//                    }
+//
+//                    deleteLog = true;
+//                }
+            });
+        });
+    </script>
+
+</head>
+<body>
+
+<ul id="menu">
+    <li data-menuanchor="page1" class="active"><a href="#page1">第1页</a></li>
+    <li data-menuanchor="page2"><a href="#page2">第2页</a></li>
+    <li data-menuanchor="page3"><a href="#page3">第3页</a></li>
+    <li data-menuanchor="page4"><a href="#page4">第4页</a></li>
+    <li data-menuanchor="page5"><a href="#page5">第5页</a></li>
+    <li data-menuanchor="page6"><a href="#page6">第6页</a></li>
+</ul>
+<div class="aboutme">
+    <a href="#page1">
+        <div class="logo"></div>
+    </a>
+        <nav class="cl-effect-9">
+            <a href="project/resume/index.html" target="_blank"><span>About me</span><span>个人简介</span></a>
+        </nav>
+</div>
+<div style="position:fixed;top:50px;left:50px;color:white;z-index:999;" id="callbacksDiv"></div>
+
+<div id="pagepiling">
+    <div class="loading-cover" id="loadingCover">
+        <div class='loader circle bgPic'>
+            <div class='loader_overlay'></div>
+            <div class='loader_cogs'>
+                <div class='loader_cogs__top'>
+                    <div class='top_part'></div>
+                    <div class='top_part'></div>
+                    <div class='top_part'></div>
+                    <div class='top_hole'></div>
+                </div>
+                <div class='loader_cogs__left'>
+                    <div class='left_part'></div>
+                    <div class='left_part'></div>
+                    <div class='left_part'></div>
+                    <div class='left_hole'></div>
+                </div>
+                <div class='loader_cogs__bottom'>
+                    <div class='bottom_part'></div>
+                    <div class='bottom_part'></div>
+                    <div class='bottom_part'></div>
+                    <div class='bottom_hole'></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section" id="section1">
+        <br/>
+        <!--动态文字-->
+        <div class="beta-app-host" id="betaAppHost"></div>
+        <!-- 引入小树图像 -->
+        <canvas id='canvas' style="width: 100%; height: 100%;"></canvas>
+
+    </div>
+
+    <div class="section" id="section2">
+        <div class="s2-l s-l"></div>
+        <div class="intro">
+
+            <div class="des">
+                <p class="title">Project 1</p>
+                <p class="content">
+                    1. 基于bootstrap的流布局页面。
+                </p>
+                <p class="content">
+                    2. 该案例主要用了bootstrap的栅格系统。
+                </p>
+                <p class="content">
+                    3. 在不同分辨率设备上图片分列显示。
+                </p>
+                <p class="content">
+                    4. 点击图片进行该案例查看。
+                </p>
+            </div>
+            <div class="bg-r"></div>
+            <div class="damao damao2">
+                <div class="d-l"></div>
+                <div class="d-r"></div>
+                <a href="project/bs-liubuju/index.html" target="_blank" class="box box2"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" id="section3">
+        <div class="s3-l s-l"></div>
+        <div class="intro">
+            <div class="des">
+                <p class="title">Project 2</p>
+                <p class="content">
+                    1. js面向对象贪吃蛇游戏。
+                </p>
+                <p class="content">
+                    2. 事件处理键盘方向控制，碰撞食物并计入蛇的数组，排除蛇的位置随机生成食物，重新启动定时器，达到越来越快的效果。
+                </p>
+                <p class="content">
+                    3. 判断蛇吃进食物后，对蛇的身体颜色进行随机取值，并展现在蛇身上。
+                </p>
+                <p class="content">
+                    4. 检测碰撞事件，失败后重新加载。
+                </p>
+            </div>
+            <div class="bg-r3"></div>
+            <div class="damao3 damao">
+                <div class="l200"></div>
+                <div class="r200"></div>
+                <a href="project/ColorfulSnake/mSnake.html" target="_blank" class="box3 box"></a>
+            </div>
+        </div>
+    </div>
+    <div class="section" id="section4">
+        <div class="s4-l s-l"></div>
+        <div class="intro">
+
+            <div class="des">
+                <p class="title">Project 3</p>
+                <p class="content">
+                    1. 绑定所有li元素的进入、离开事件。
+                </p>
+                <p class="content">
+                    2. 获取x、y坐标（将元素左右、上下居中分开，判断元素形状，计算弧度范围，确定方向）。
+                </p>
+                <p class="content">
+                    3. 确认图片进入、离开做相应效果。
+                </p>
+            </div>
+            <div class="bg-r"></div>
+            <div class="damao4 damao">
+                <div class="d-l"></div>
+                <div class="d-r"></div>
+                <a href="project/animal/animal.html" target="_blank" class="box4 box"></a>
+            </div>
+        </div>
+        <!--<h1>Ideal for animations</h1>-->
+        <!--<p>Total control over your website.</p>-->
+    </div>
+
+    <div class="section" id="section5">
+        <div class="s5-l s-l"></div>
+        <div class="intro">
+
+            <div class="des">
+                <p class="title">Project 4</p>
+                <p class="content">
+                    1. 封装运动函数
+                </p>
+                <p class="content">
+                    2. 一张图片展开和其余图片宽度为整个盒子宽度。
+                </p>
+                <p class="content">
+                    3. 根据鼠标滑过事件进行图片展开，缩放操作。
+                </p>
+            </div>
+            <div class="bg-r"></div>
+            <div class="damao5 damao">
+                <!--<div class="d-l"></div>-->
+                <!--<div class="d-r"></div>-->
+                <div class="lanren2">
+                    <div class="cover"></div>
+                    <div class="left"></div>
+                    <div class="right"></div>
+                </div>
+                <a href="project/accordion/accordion.html" target="_blank" class="box5 box"></a>
+            </div>
+        </div>
+    </div>
+    <div class="section" id="section6">
+        <div class="intro">
+            <h1>thanks for watching</h1>
+            <p>--The End--</p>
+        </div>
+
+    </div>
+</div>
+
+
+</body>
+</html>
