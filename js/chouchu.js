@@ -2,7 +2,7 @@
 (function(){
 	var myFir = function(){
 		var firIm = (function(){ //目的：形成块级作用域，避免外界修改
-			var arr = ['welcome','{','　　return "hello world"','}'];
+			var arr = ['welcome','{','　　return "练习项目展示"','}'];
 			var betaAppHost = $("#betaAppHost").get(0);
 			var firShow = $("#firShow").get(0);
 			var jsons = {
